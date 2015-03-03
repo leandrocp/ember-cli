@@ -687,6 +687,12 @@ describe('Blueprint', function() {
 
       blueprint.addBowerPackageToProject('foo-bar', '1.0.0');
     });
+
+    it('throws error when an packageName is not provided', function(){
+      expect(function() {
+        blueprint.addBowerPackageToProject();
+      }).to.throw(SilentError, /The `addBowerPackageToProject` method requires an package name to be specified./);
+    });
   });
 
   describe('addBowerPackagesToProject', function() {
