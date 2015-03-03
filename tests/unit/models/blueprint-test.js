@@ -755,6 +755,30 @@ describe('Blueprint', function() {
       expect(packages).to.deep.equal(['foo-bar#~1.0.0', 'bar-foo#0.7.0']);
     });
 
+    it('uses the provided complete name', function() {
+      var packages;
+
+      BowerInstallTask = Task.extend({
+        run: function(options) {
+          packages = options.packages;
+        }
+      });
+
+      blueprint.addBowerPackagesToProject([
+        {name: 'https://github.com/foo/bar.git', target: '1.0'},
+        {name: 'git@github.com:foo/bar.git', target: '1.0'},
+        {name: '/my/local/foo/bar'},
+        {name: 'http://foo.com/bar.js'}
+      ]);
+
+      expect(packages).to.deep.equal([
+        'https://github.com/foo/bar.git#1.0',
+        'git@github.com:foo/bar.git#1.0',
+        '/my/local/foo/bar',
+        'http://foo.com/bar.js'
+      ]);
+    });
+
     it('uses uses verbose mode with the task', function() {
       var verbose;
 
