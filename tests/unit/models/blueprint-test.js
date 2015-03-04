@@ -551,10 +551,15 @@ describe('Blueprint', function() {
 
       blueprint.addPackagesToProject([
         {name: 'foo-bar'},
-        {name: 'bar-foo'}
+        {name: 'bar-foo'},
+        {name: '@myorg/foo'},
       ]);
 
-      expect(packages).to.deep.equal(['foo-bar', 'bar-foo']);
+      expect(packages).to.deep.equal([
+        'foo-bar',
+        'bar-foo',
+        '@myorg/foo'
+      ]);
     });
 
     it('calls the task with package names and versions', function() {
@@ -568,10 +573,15 @@ describe('Blueprint', function() {
 
       blueprint.addPackagesToProject([
         {name: 'foo-bar', target: '^123.1.12'},
-        {name: 'bar-foo', target: '0.0.7'}
+        {name: 'bar-foo', target: '0.0.7'},
+        {name: '@myorg/foo', target: 'latest'}
       ]);
 
-      expect(packages).to.deep.equal(['foo-bar@^123.1.12', 'bar-foo@0.0.7']);
+      expect(packages).to.deep.equal([
+        'foo-bar@^123.1.12',
+        'bar-foo@0.0.7',
+        '@myorg/foo@latest'
+      ]);
     });
 
     it('writes information to the ui log for a single package', function() {
